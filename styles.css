@@ -1,88 +1,169 @@
-*, *::after, *::before {
-    box-sizing: border-box;
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
 }
 
 :root {
-    --cell-size: 150px;
-    --mark-size: calc(var(--cell-size) * .85);
+  --cell-size: 150px;
+  --mark-size: calc(var(--cell-size) * 0.85);
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .board {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    justify-items: center;
-    align-items: center;
-    grid-template-columns: repeat(3, auto);
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
 }
 
 .cell {
-    width: var(--cell-size);
-    height: var(--cell-size);
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
 }
 .cell:first-child,
 .cell:nth-child(2),
 .cell:nth-child(3) {
-    border-top: none;
+  border-top: none;
 }
-.cell:nth-child(3n + 3)  {
-    border-right: none;
+.cell:nth-child(3n + 3) {
+  border-right: none;
 }
 .cell:last-child,
 .cell:nth-child(8),
 .cell:nth-child(7) {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .cell:nth-child(3n + 1) {
-    border-left: none;
+  border-left: none;
 }
 
 .cell.x,
 .cell.circle {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .cell.x::before,
 .cell.x::after {
-    content: '';
-    position:absolute;
-    width: calc(var(--mark-size) * .15);
-    height: var(--mark-size);
-    background-color: black;
-}
-.cell.x::before {
-    transform: rotate(45deg);
-}
-.cell.x::after {
-    transform: rotate(-45deg);
+  background-color: black;
 }
 
-.cell.circle::before,
-.cell.circle::after {
-    content: '';
-    position:absolute;
-    border-radius: 100%;
+.cell:not(.x):not(.circle):hover::before,
+.cell:not(.x):not(.circle):hover::after {
+  background-color: lightgray;
 }
+
+.cell.x::before,
+.cell.x::after,
+.board.x > .cell:not(.x):not(.circle):hover::before,
+.board.x > .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+}
+
+.cell.x::before,
+.cell:hover::before {
+  transform: rotate(45deg);
+}
+.cell.x::after,
+.cell:hover::after {
+  transform: rotate(-45deg);
+}
+
 .cell.circle::before {
-    height: var(--mark-size);
-    width: var(--mark-size);
-    background-color: black;
+  background-color: black;
 }
-.cell.circle::after {
-    height: calc(var(--mark-size) * .7);
-    width: calc(var(--mark-size) * .7);
-    background-color: white;
+
+.board > .cell:not(.x):not(.circle):hover::before,
+.board > .cell:not(.x):not(.circle):hover::after {
+  background-color: lightgray;
+}
+.cell.circle::before,
+.cell.circle::after,
+.board.circle > .cell:not(.x):not(.circle):hover::before,
+.board.circle > .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 100%;
+}
+.cell.circle::before,
+.board.circle > .cell:not(.x):not(.circle):hover::before {
+  height: var(--mark-size);
+  width: var(--mark-size);
+}
+.cell.circle::after,
+.board.circle > .cell:not(.x):not(.circle):hover::after {
+  height: calc(var(--mark-size) * 0.7);
+  width: calc(var(--mark-size) * 0.7);
+  background-color: white;
+}
+
+.winning-message {
+  display: none;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+
+  gap: 50px;
+  color: lightgrey;
+  font-size: 5rem;
+}
+
+.winning-message button {
+  font-size: 3rem;
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+.winning-message button:hover {
+  background-color: black;
+  border: 1px solid lightgrey;
+  color: lightgray;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+
+.winning-message.show {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+
+  gap: 50px;
+  color: lightgrey;
+  font-size: 5rem;
+  display: flex;
+
 }
