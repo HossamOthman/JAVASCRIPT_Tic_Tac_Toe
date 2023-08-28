@@ -11,7 +11,9 @@ const WINNING_COMBINATION = [
     [2,4,6]
 ]
 const cellElements = document.querySelectorAll('[data-cell]');
-const board = document.getElementById('board')
+const board = document.getElementById('board');
+const winningMessageElement = document.getElementById('winningMessage');
+const winningMessageTextElement = document.querySelector('[data-winning-message-text]');
 let circleTurn;
 
 
@@ -35,7 +37,7 @@ function handleClick(e) {
 
     // Check for win
     if (checkWin(currentClass)) {
-        console.log("winner");
+        endGame(false);
     };
     function checkWin(currentClass) {
         return WINNING_COMBINATION.some(comination => {
@@ -45,7 +47,14 @@ function handleClick(e) {
         })
     };
     // Check for Draw
+    function endGame(draw) {
+        if (draw) {
 
+        } else {
+            winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's" } Wins!`
+        }
+        winningMessageElement.classList.add('show');
+    }
     // Switch Turns
     swapTurns();
 
