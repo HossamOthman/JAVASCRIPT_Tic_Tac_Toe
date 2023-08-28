@@ -38,6 +38,11 @@ function handleClick(e) {
     // Check for win
     if (checkWin(currentClass)) {
         endGame(false);
+    } else if (isDraw()) {
+        endGame(true)
+    } else {
+    // Switch Turns
+    swapTurns();
     };
     function checkWin(currentClass) {
         return WINNING_COMBINATION.some(comination => {
@@ -49,14 +54,18 @@ function handleClick(e) {
     // Check for Draw
     function endGame(draw) {
         if (draw) {
-
+            winningMessageTextElement.innerText = "Draw! "
         } else {
             winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's" } Wins!`
         }
         winningMessageElement.classList.add('show');
     }
-    // Switch Turns
-    swapTurns();
+    function isDraw() {
+        return [...cellElements].every(cell => {
+            return  cell.classList.contains(X_CLASS) || 
+                    cell.classList.contains(CIRCLE_CLASS)
+        })
+    }
 
     // add hover States
     setBoardHoverClass();
