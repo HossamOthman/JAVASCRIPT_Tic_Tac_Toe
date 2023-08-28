@@ -14,9 +14,12 @@ const cellElements = document.querySelectorAll('[data-cell]');
 const board = document.getElementById('board');
 const winningMessageElement = document.getElementById('winningMessage');
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]');
+const restartBTN = document.getElementById('restartButton');
 let circleTurn;
 
 
+// restart button click event
+restartBTN.addEventListener('click', startGame );
 
 
 // function to create the first hover class
@@ -24,9 +27,13 @@ startGame();
 function startGame() {
     circleTurn = false;
     cellElements.forEach(cell => {
+        cell.classList.remove(X_CLASS);
+        cell.classList.remove(CIRCLE_CLASS);
+        cell.removeEventListener('click', handleClick);
         cell.addEventListener('click', handleClick, {once: true} )
-    }),
+    })
     setBoardHoverClass();
+    winningMessageElement.classList.remove('show');
 };
 
 function handleClick(e) {
